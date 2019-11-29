@@ -398,27 +398,6 @@ int ipahal_nat_is_entry_valid(enum ipahal_nat_type nat_type, void *entry,
 	return 0;
 }
 
-int ipahal_nat_is_entry_valid(enum ipahal_nat_type nat_type, void *entry,
-	bool *entry_valid)
-{
-	struct ipahal_nat_obj *nat_obj;
-
-	if (WARN(entry == NULL || entry_valid == NULL,
-		"NULL pointer received\n"))
-		return -EINVAL;
-	if (WARN(nat_type < 0 || nat_type >= IPA_NAT_MAX,
-		"requested NAT type %d is invalid\n", nat_type))
-		return -EINVAL;
-
-	IPAHAL_DBG("Determine whether the entry is valid for NAT type=%s\n",
-		ipahal_nat_type_str(nat_type));
-	nat_obj = &ipahal_nat_objs[ipahal_ctx->hw_type][nat_type];
-	*entry_valid = nat_obj->is_entry_valid(entry);
-	IPAHAL_DBG("The entry is %svalid\n", (*entry_valid) ? "" : "not ");
-
-	return 0;
-}
-
 int ipahal_nat_stringify_entry(enum ipahal_nat_type nat_type, void *entry,
 	char *buff, size_t buff_size)
 {
