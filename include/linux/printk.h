@@ -10,10 +10,9 @@
 extern const char linux_banner[];
 extern const char linux_proc_banner[];
 
-#ifdef CONFIG_VENDOR_REALME
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01,add for get disable uart value from cmdline
+#ifdef CONFIG_PRODUCT_REALME_RMX1901
 extern bool oem_get_uartlog_status(void);
-#endif /*CONFIG_VENDOR_REALME*/
+#endif /*CONFIG_PRODUCT_REALME_RMX1901*/
 
 static inline int printk_get_level(const char *buffer)
 {
