@@ -2006,7 +2006,7 @@ static void msm_geni_serial_set_termios(struct uart_port *uport,
 		break;
 	}
 
-
+	uport->status  &= ~(UPSTAT_AUTOCTS);
 	/* stop bits */
 	if (termios->c_cflag & CSTOPB)
 		stop_bit_len = TX_STOP_BIT_LEN_2;
@@ -2014,8 +2014,10 @@ static void msm_geni_serial_set_termios(struct uart_port *uport,
 		stop_bit_len = TX_STOP_BIT_LEN_1;
 
 	/* flow control, clear the CTS_MASK bit if using flow control. */
-	if (termios->c_cflag & CRTSCTS)
+	if (termios->c_cflag & CRTSCTS) {
 		tx_trans_cfg &= ~UART_CTS_MASK;
+		uport->status |= UPSTAT_AUTOCTS;
+	}
 	else
 		tx_trans_cfg |= UART_CTS_MASK;
 	/* status bits to ignore */
@@ -2759,7 +2761,7 @@ static int msm_geni_serial_sys_suspend_noirq(struct device *dev)
 		if(boot_with_console() == true)
 		#else
 		if(oem_get_uartlog_status() == false || get_boot_mode() == MSM_BOOT_MODE__FACTORY)
-		#endif	
+		#endif
 		#endif/*CONFIG_VENDOR_REALME*/
 		uart_suspend_port((struct uart_driver *)uport->private_data,
 					uport);

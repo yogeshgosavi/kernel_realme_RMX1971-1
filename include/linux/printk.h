@@ -10,9 +10,9 @@
 extern const char linux_banner[];
 extern const char linux_proc_banner[];
 
-#ifdef CONFIG_PRODUCT_REALME_RMX1901
+#ifdef CONFIG_VENDOR_REALME
 extern bool oem_get_uartlog_status(void);
-#endif /*CONFIG_PRODUCT_REALME_RMX1901*/
+#endif /*CONFIG_VENDOR_REALME*/
 
 static inline int printk_get_level(const char *buffer)
 {
